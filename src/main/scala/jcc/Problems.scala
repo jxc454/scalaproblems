@@ -41,4 +41,37 @@ object Problems {
       val init :+ last = t
       h == last && isPalindrome3(init)
   }
+
+  def flatten[T](l: List[List[T]]): List[T] = l match {
+    case Nil => Nil
+    case h :: t => h ::: flatten(t)
+  }
+
+  def removeConsecutiveDupes(str: String): String = {
+    def removeIfMatch(str: String, strMatch: Char): String = {
+      if (str == "") {
+        ""
+      } else if (str.startsWith(strMatch.toString)) {
+        removeIfMatch(str.tail, strMatch)
+      } else {
+        str.head + removeIfMatch(str.tail, str.head)
+      }
+    }
+
+    removeIfMatch(str=str, strMatch='\0')
+  }
+
+  def removeConsecutiveDupes[T](list: List[T]): List[T] = (list :\ (Nil: List[T]))((k, acc) => acc match {
+    case Nil => k :: Nil
+    case h :: _ if k == h => acc
+    case _ => k :: acc
+  })
+
+  def consecutiveSubLists[T](list: List[T]): List[List[T]] = (list :\ (Nil: List[List[T]]))((k, acc) => acc match {
+    case Nil if list == Nil => Nil
+    case Nil => List(k :: Nil)
+    case h :: t if k == h.head => (k :: h) :: t
+    case _ => (k :: Nil) :: acc
+  })
+
 }

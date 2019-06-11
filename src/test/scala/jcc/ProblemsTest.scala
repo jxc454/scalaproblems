@@ -57,4 +57,24 @@ class ProblemsTest extends FunSpec with MustMatchers {
     Problems.isPalindrome3(List()) must be(true)
     Problems.isPalindrome3(List(1, 2)) must be(false)
   }
+  it("flattens flattens a List of Lists by one level") {
+    Problems.flatten(List(List(1), List(2))) must be(List(1, 2))
+    Problems.flatten(List(List(List(1)), List(List(2)))) must be(List(List(1), List(2)))
+  }
+  it("eliminates consecutive dupes in a string") {
+    Problems.removeConsecutiveDupes("") must be ("")
+    Problems.removeConsecutiveDupes("a") must be ("a")
+    Problems.removeConsecutiveDupes("abbbbabbcc") must be ("ababc")
+  }
+  it("eliminates consecutive dupes in a list") {
+    Problems.removeConsecutiveDupes(List()) must be(Nil)
+    Problems.removeConsecutiveDupes(List(1, 2, 3)) must be(List(1, 2, 3))
+    Problems.removeConsecutiveDupes(List(1, 4, 4, 7, 7, 7)) must be(List(1, 4, 7))
+  }
+  it("packs consecutive values into sublists") {
+    Problems.consecutiveSubLists(List()) must be(List())
+    Problems.consecutiveSubLists(List(1)) must be(List(List(1)))
+    Problems.consecutiveSubLists(List(3, 3, 4, 4, 4)) must be(List(List(3, 3), List(4, 4, 4)))
+  }
+
 }
