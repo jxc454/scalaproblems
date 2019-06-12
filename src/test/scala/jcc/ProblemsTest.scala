@@ -76,5 +76,22 @@ class ProblemsTest extends FunSpec with MustMatchers {
     Problems.consecutiveSubLists(List(1)) must be(List(List(1)))
     Problems.consecutiveSubLists(List(3, 3, 4, 4, 4)) must be(List(List(3, 3), List(4, 4, 4)))
   }
-
+  it("gives run length encoding on a list") {
+    Problems.runLengthEncoding(List()) must be(List())
+    Problems.runLengthEncoding(List(1, 2, 3, 4)) must be(List((1, 1), (2, 1), (3, 1), (4, 1)))
+    Problems.runLengthEncoding(List(6, 7, 7, 0)) must be(List((6, 1), (7, 2), (0, 1)))
+  }
+  it("gives run length encoding on a list, no 1s") {
+    Problems.runLengthEncoding2(List()) must be(List())
+    Problems.runLengthEncoding2(List(1, 2, 3, 4)) must be(List(Left(1), Left(2), Left(3), Left(4)))
+    Problems.runLengthEncoding2(List(6, 7, 7, 0)) must be(List(Left(6), Right(7, 2), Left(0)))
+  }
+  it("decodes a run length encoded list") {
+    Problems.decodeRLE(List(('a', 2), ('v', 1), ('f', 3))) must be(List('a', 'a', 'v', 'f', 'f', 'f'))
+  }
+  it("gives run length encoding with span") {
+    Problems.runLengthEncodingWithSpan(List()) must be(List())
+    Problems.runLengthEncodingWithSpan(List(1, 2)) must be(List((1, 1), (2, 1)))
+    Problems.runLengthEncodingWithSpan(List(12, 12, 15, 13, 13, 13, 13)) must be(List((12, 2), (15, 1), (13, 4)))
+  }
 }

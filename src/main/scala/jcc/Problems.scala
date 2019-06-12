@@ -74,4 +74,22 @@ object Problems {
     case _ => (k :: Nil) :: acc
   })
 
+  def runLengthEncoding[T](list: List[T]): List[(T, Int)] = (list :\ (Nil: List[(T, Int)]))((k, acc) => acc match {
+    case Nil if list == Nil => Nil
+    case Nil => (k, 1) :: Nil
+    case h :: t if k == h._1 => (k, h._2 + 1) :: t
+    case _ => (k, 1) :: acc
+  })
+
+  def runLengthEncoding2[T](list: List[T]): List[Either[T, (T, Int)]] = runLengthEncoding(list)
+    .map(tup => if (tup._2 == 1) Left(tup._1) else Right(tup))
+
+  def runLengthEncodingWithSpan[T](list: List[T]): List[(T, Int)] = list match {
+    case Nil => Nil
+    case _ =>
+      val (front: List[T], back: List[T]) = list.span(_ == list.head)
+      (list.head, front.length) :: runLengthEncodingWithSpan(back)
+  }
+
+  def decodeRLE[T](rle: List[(T, Int)]): List[T] = rle.flatMap(k => List.fill(k._2)(k._1))
 }
