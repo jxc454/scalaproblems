@@ -92,4 +92,20 @@ object Problems {
   }
 
   def decodeRLE[T](rle: List[(T, Int)]): List[T] = rle.flatMap(k => List.fill(k._2)(k._1))
+
+  def dupListElements[T](l: List[T]): List[T] = l.flatMap(k => List(k, k))
+
+  def dupListElementsN[T](l: List[T], n: Int): List[T] = l.flatMap(k => List.fill(n)(k))
+
+  def dropEveryNth[T](l: List[T], n: Int): List[T] = l.zip(List.fill(1 + l.length / n)(1 to n).flatten).filterNot(_._2 == n).map(_._1)
+
+  def dropEveryNth2[T](l: List[T], n: Int): List[T] = {
+    val (init: List[List[T]], last: List[List[T]]) = l.grouped(n).toList.splitAt(l.length / n)
+    init.flatMap(_.init) ++ last.flatten.take(n - 1)
+  }
+
+  def rotateN[T](l: List[T], n: Int): List[T] = {
+    val (first: List[T], last: List[T]) = l.splitAt(n)
+    last ++ first
+  }
 }

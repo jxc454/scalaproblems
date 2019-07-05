@@ -94,4 +94,23 @@ class ProblemsTest extends FunSpec with MustMatchers {
     Problems.runLengthEncodingWithSpan(List(1, 2)) must be(List((1, 1), (2, 1)))
     Problems.runLengthEncodingWithSpan(List(12, 12, 15, 13, 13, 13, 13)) must be(List((12, 2), (15, 1), (13, 4)))
   }
+  it("duplicates list elements") {
+    Problems.dupListElements(List(1, 2, 3)) must be (List(1, 1, 2, 2, 3, 3))
+  }
+  it("duplicates list elements N times") {
+    Problems.dupListElementsN(List(1, 2, 3), 3) must be(List(1, 1, 1, 2, 2, 2, 3, 3, 3))
+  }
+  it("drops every nth value in a list") {
+    Problems.dropEveryNth(List(1, 2, 3, 4, 5), 2) must be(List(1, 3, 5))
+    Problems.dropEveryNth(List(1, 2, 3, 4, 5), 20) must be(List(1, 2, 3, 4, 5))
+    Problems.dropEveryNth(List(1, 2, 3, 4, 5), 1) must be(Nil)
+  }
+  it("drops every nth value in a list 2") {
+    Problems.dropEveryNth2(List(1, 2, 3, 4, 5), 2) must be(List(1, 3, 5))
+    Problems.dropEveryNth2(List(1, 2, 3, 4, 5), 20) must be(List(1, 2, 3, 4, 5))
+    Problems.dropEveryNth2(List(1, 2, 3, 4, 5), 1) must be(Nil)
+  }
+  it("rotates a list") {
+    Problems.rotateN(List(1, 2, 3, 4, 5), 2) must be (List(3, 4, 5, 1, 2))
+  }
 }
