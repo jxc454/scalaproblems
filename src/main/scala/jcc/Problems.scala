@@ -108,4 +108,26 @@ object Problems {
     val (first: List[T], last: List[T]) = l.splitAt(n)
     last ++ first
   }
+
+  def nQueens(n: Int): List[List[(Int, Int)]] = {
+    def isSafe(queens: List[(Int, Int)], queen: (Int, Int)): Boolean = {
+      if (queens.map(_._1).contains(queen._1) ||
+        queens.map(_._2).contains(queen._2) ||
+        queens.map(rc => rc._1 - rc._2).contains(queen._1 - queen._2) ||
+        queens.map(rc => rc._1 + rc._2).contains(queen._1 + queen._2)
+      ) false else true
+    }
+
+    def placeQueens(row: Int): List[List[(Int, Int)]] = {
+      if (row == 0) return List(Nil)
+      if (row == 1) return (1 to n).map(column => List((row, column))).toList
+
+      (1 to n)
+        .flatMap(column => placeQueens(row - 1).map(next => (row, column) :: next))
+        .filter(k => isSafe(k.tail, k.head))
+        .toList
+    }
+
+    placeQueens(n)
+  }
 }

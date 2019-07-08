@@ -113,4 +113,9 @@ class ProblemsTest extends FunSpec with MustMatchers {
   it("rotates a list") {
     Problems.rotateN(List(1, 2, 3, 4, 5), 2) must be (List(3, 4, 5, 1, 2))
   }
+
+  it("nQueens") {
+    Problems.nQueens(4).length must be(2)
+    Problems.nQueens(5).length must be(10)
+  }
 }
