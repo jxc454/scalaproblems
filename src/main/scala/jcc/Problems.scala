@@ -130,4 +130,28 @@ object Problems {
 
     placeQueens(n)
   }
+
+  def nQueensForComp(n: Int): List[List[(Int, Int)]] = {
+    def isSafe(queens: List[(Int, Int)], queen: (Int, Int)): Boolean = {
+      if (queens.map(_._1).contains(queen._1) ||
+        queens.map(_._2).contains(queen._2) ||
+        queens.map(rc => rc._1 - rc._2).contains(queen._1 - queen._2) ||
+        queens.map(rc => rc._1 + rc._2).contains(queen._1 + queen._2)
+      ) false else true
+    }
+
+    def placeQueens(row: Int): List[List[(Int, Int)]] = {
+      if (row == 0) return List(Nil)
+      if (row == 1) return (1 to n).map(column => List((row, column))).toList
+
+      for {
+        queens <- placeQueens(row - 1)
+        column <- 1 to n
+        queen = (row, column)
+        if isSafe(queens, queen)
+      } yield queen :: queens
+    }
+
+    placeQueens(n)
+  }
 }

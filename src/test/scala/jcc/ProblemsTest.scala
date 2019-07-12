@@ -118,4 +118,9 @@ class ProblemsTest extends FunSpec with MustMatchers {
     Problems.nQueens(4).length must be(2)
     Problems.nQueens(5).length must be(10)
   }
+
+  it("nQueensForComp") {
+    Problems.nQueensForComp(4).length must be(2)
+    Problems.nQueensForComp(5).length must be(10)
+  }
 }
