@@ -154,4 +154,19 @@ object Problems {
 
     placeQueens(n)
   }
+
+  def maxSumContiguousSubArray(a: Array[Int]): Int = {
+    @tailrec
+    def walk(max: Int, current: Int, index: Int): Int = {
+      if (index > a.length - 1) return max
+
+      val active: Int = a(index)
+      val nextCurrent: Int = if (current <= 0) active else active + current
+      val nextMax = if (nextCurrent > max) nextCurrent else max
+
+      walk(nextMax, nextCurrent, index + 1)
+    }
+
+    walk(Int.MinValue, Int.MinValue, 0)
+  }
 }

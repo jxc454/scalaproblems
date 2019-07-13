@@ -123,4 +123,10 @@ class ProblemsTest extends FunSpec with MustMatchers {
     Problems.nQueensForComp(4).length must be(2)
     Problems.nQueensForComp(5).length must be(10)
   }
+
+  it("maxSumContiguousSubArray") {
+    Problems.maxSumContiguousSubArray(Array(-2, 1, -3, 4, -1, 2, -5, 4)) must be(5)
+    Problems.maxSumContiguousSubArray(Array(-2, -1, -5)) must be(-1)
+    Problems.maxSumContiguousSubArray(Array(6, 1, -111, 7, 0)) must be(7)
+  }
 }
